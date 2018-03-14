@@ -2,7 +2,7 @@
 ## MongoDB
 > 3.2.19
 
-### Authorize
+### Authorize
 + 创建 `admin account`
 
   ```
