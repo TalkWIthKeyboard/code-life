@@ -8,7 +8,7 @@
 
 + [命令备忘](/src/backend/server-manager/command.md)
 + [环境配置](/src/backend/server-manager/env.md)
-### 代码片段
+### 代码片段
 + [开发套件连接](/src/backend/code/connection.md)
 
 
