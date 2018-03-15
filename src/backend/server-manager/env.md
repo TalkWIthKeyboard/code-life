@@ -4,7 +4,7 @@
 
 ### Path
 + `mongod.conf`
-  > `mongod` 全局设置文件，[设置文件说明文档](https://docs.mongodb.com/v3.2/reference/configuration-options/)
+  > `mongod` 全局设置文件，[设置文件说明文档](https://docs.mongodb.com/v3.2/reference/configuration-options/)
   ```
   $ /etc/mongod.conf
   ```
@@ -96,13 +96,13 @@ WantedBy=multi-user.target
 ```
 ### Issue && Solution
 
-+ 外部服务器连接
-  
++ 外部服务器连接
   
-  因为默认设置的 `bindIp` 设置是 `127.0.0.1` 所以只能在本机上进行连接。如果需要 `bind` 所有的 `IPv4 IP`，可以设置为 `0.0.0.0`
+  
+  因为默认设置的 `bindIp` 设置是 `127.0.0.1` 所以只能在本机上进行连接。如果需要 `bind` 所有的 `IPv4 IP`，可以设置为 `0.0.0.0`
 
 + 数据库文件备份、恢复、导入和导出
-  >在本地对本地数据库进行操作均可忽略 `-h`，`--port` 参数
+  >在本地对本地数据库进行操作均可忽略 `-h`，`--port` 参数
 
   备份
   ```
@@ -118,16 +118,16 @@ WantedBy=multi-user.target
   ```
   $ mongoexport -h IP --port 端口 -u 用户名 -p 密码 -d 数据库 -c 表名 -f 字段
   ```
-  + `-f: ` 导出指字段，以字号分割，`-f a,b,c` 导出3个字段，如果不填则导出整张表
+  + `-f: ` 导出指字段，以字号分割，`-f a,b,c` 导出3个字段，如果不填则导出整张表
   + `-o: ` 导出的文件名，可以加后缀名
-  + `-q: ` 导出的 `filter`， `-q '{ "_id" : "1" }'` 只导出 `_id="1"` 的数据
-  + `--csv: ` 表示导出的文件格式为 `csv`
+  + `-q: ` 导出的 `filter`， `-q '{ "_id" : "1" }'` 只导出 `_id="1"` 的数据
+  + `--csv: ` 表示导出的文件格式为 `csv`
 
   导入
   ```
   $ mongoimport -h IP --port 端口 -u 用户名 -p 密码 -d 数据库 -c 表名 --upsert --drop 文件名
   ```
-  以上命令是导入 **非csv文件** ，如果是 **csv文件** 用 `--headerline` 替换 `--upsert`，如果不是整张表而是字段，则用 `--upsertFields a,b,c` 替换 `--upsert`
+  以上命令是导入 **非csv文件** ，如果是 **csv文件** 用 `--headerline` 替换 `--upsert`，如果不是整张表而是字段，则用 `--upsertFields a,b,c` 替换 `--upsert`
 
 
 ## Nginx
