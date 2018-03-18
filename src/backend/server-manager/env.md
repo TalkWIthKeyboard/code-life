@@ -87,7 +87,7 @@
   ```
   $ pip install https://github.com/shadowsocks/shadowsocks/archive/master.zip -U
   ```
-+ 配置 `shadowsocks`
++ 配置 `shadowsocks`
   ```
   $ vim /etc/sslocal.json
 
@@ -96,7 +96,7 @@
     "server":"host",
     // 代理服务器端口
     "server_port":57158,
-    // 本地 sock5 监听端口
+    // 本地 sock5 监听端口
     "local_port":1080,
     // 服务器密码
     "password":"password",
@@ -125,7 +125,7 @@
   // 配置路径
   $ /usr/local/etc/proxychains.conf
   ```
-+ 在后台启动 `shadowsocks`
++ 在后台启动 `shadowsocks`
   > 以 `/etc/sslocal.json` 作为配置执行，`LOG` 打在 `/var/log/ss-local.log`
   ```
   $ nohup sslocal -c /etc/sslocal.json < /dev/null &>>/var/log/ss-local.log
@@ -376,7 +376,7 @@ WantedBy=multi-user.target
   ```
   $ ln -s /usr/bin/python3 /usr/bin/python
   ```
-+ 修改 `yum` 的 `python` 环境
++ 修改 `yum` 的 `python` 环境
   ```
   $ vim /usr/bin/yum
   ```
