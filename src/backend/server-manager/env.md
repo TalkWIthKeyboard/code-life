@@ -309,12 +309,12 @@ WantedBy=multi-user.target
 
 <h2 id='5'>Maven</h2>
 
-<h2 id='7'>Python</h2>
+<h2 id='7'>Python</h2>
 
 ### 升级 `Python` 版本
 
 #### 使用 `yum` 安装
-+ 如果 `yum` 没有 `Epel` 的源，先安装
++ 如果 `yum` 没有 `Epel` 的源，先安装
   ```
   $ yum install epel-release
   ```
@@ -324,7 +324,7 @@ WantedBy=multi-user.target
   ```
 + 这个是没有安装 `Pip` 的，如果需要可以下载安装
   ```
-  $ curl -O https://bootstrap.pypa.io/get-pip.py
+  $ curl -O https://bootstrap.pypa.io/get-pip.py
   $ sudo /usr/bin/python3.4 get-pip.py
   ```
 
@@ -362,3 +362,4 @@ WantedBy=multi-user.target
   $ vim /usr/bin/yum
   ```
   把第一行的 `#!/usr/bin/python` 改为 `#!/usr/bin/python2.7` （这个看自己服务器的 `python2` 版本）
+
