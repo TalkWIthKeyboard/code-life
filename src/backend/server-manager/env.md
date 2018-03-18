@@ -1,5 +1,62 @@
-## SSL
-## MongoDB
+> + [SSH 登录](#1)
+> + [YUM](#2)
+> + [MongoDB](#3)
+> + [Nginx](#4)
+> + [Maven](#5)
+
+<h2 id='1'>SSH 登录</h2>
+
+> 客户机为 `MacOS`
++ 在客户机上生成钥匙串
+  ```
+  $ ssh-keygen -t rsa -C "a@example.com"
+  ```
+  + `-t`: 加密方式， `rsa` 是现在最安全的一种
+  + `-C`: 添加一些注释进行标记
++ 执行命令后会被询问一些信息
+  + 给这个新的密钥输入一个名称，保留默认的名字和设置
+  + 提供一个密码
++ 完成后在 `~/.ssh` 中能查找到 `id_rsa.pub` 和 `id_rsa`，第一个是公钥，第二个是私钥。
++ 在服务器上配置 `ssh`
+  ```
+  // 检查是否存在 ssh 服务
+  $ rpm –qa|grep ssh
+  // 如果没有则先下载并启动
+  $ yum install ssh
+  $ systemctl start ssh
+  ```
++ 将客户机上的公钥 `~/.ssh/id_rsa.pub` 复制到服务器的 `~/.ssh/authorized_keys` 即可
+
+<h2 id='2'>YUM</h2>
+
+> 3.4.3
+
+## Configuration
+> + [YUM 配置说明](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/6/html/deployment_guide/sec-configuring_yum_and_yum_repositories)
+> + [CentOS yum 源的配置与使用](https://www.cnblogs.com/mchina/archive/2013/01/04/2842275.html)
++ `yum.conf`
+  ```
+  $ /etc/yum/yum.conf
+  ```
++ `cachedir`: `yum` 缓存的目录，`yum` 在此存储下载的 `rpm` 包和数据库，默认设置为 `/var/cache/yum`
++ `keepcache`: 安装完成后是否保留软件包，0为不保留**（默认为0）**，1为保留
++ `debuglevel`: Debug 信息输出等级，范围为0-10，缺省为2
++ `logfile`: `yum` 日志文件位置
++ `pkgpolicy`: 包的策略。一共有两个选项，`newest` 和 `last` ，这个作用是如果你设置了多个 `repository`，而同一软件在不同的 `repository` 中同时存在，`yum` 应该安装哪一个，如果是 `newest` ，则 `yum` 会安装最新的那个版本。如果是 `last` ，则 `yum` 会将服务器 `id` 以字母表排序，并选择最后的那个服务器上的软件安装。一般都是选 `newest`。
++ `distroverpkg`: 指定一个软件包，`yum` 会根据这个包判断你的发行版本，默认是 `redhat-release`，也可以是安装的任何针对自己发行版的 `rpm` 包。
++ `tolerant`: 有1和0两个选项，表示 `yum` 是否容忍命令行发生与软件包有关的错误，比如你要安装1,2,3三个包，而其中3此前已经安装了，如果你设为1,则 `yum` 不会出现错误信息。默认是0。
++ `exactarch`: 有1和0两个选项，设置为1，则 `yum` 只会安装和系统架构匹配的软件包，例如，`yum` 不会将i686的软件包安装在适合i386的系统中。默认为1。
++ `retries`: 网络连接发生错误后的重试次数，如果设为0，则会无限重试。默认值为6.
++ `obsoletes`: 这是一个 `update` 的参数，具体请参阅yum(8)，简单的说就是相当于 `upgrade` ，允许更新陈旧的RPM包。
++ `plugins`: 是否启用插件，默认1为允许，0表示不允许。
+
+## Sources
+
+`YUM` 的源分为本地源和网络源，本地源需要关联挂载的磁盘地址，网络源需要关联外部源仓库地址。在 `/etc/yum.repos.d/` 中，有 `CentOS-Base.repo` 和 `CentOS-Epel.repo`。其中 `Base` 是网络源的配置，`Epel` 是 `Epel` 源的配置，默认没有 `CentOS-Media.repo` 本地源的配置。如果需要，可以进行手动添加，也可以在该路径下添加一些针对特殊的软件的源，类似 `docker-ce.repo`，在安装的过程中会首选这个源。
+
+
+<h2 id='3'>MongoDB</h2>
+
 > 3.2.19
 
 ### Path
@@ -129,5 +186,6 @@ WantedBy=multi-user.target
   ```
   以上命令是导入 **非csv文件** ，如果是 **csv文件** 用 `--headerline` 替换 `--upsert`，如果不是整张表而是字段，则用 `--upsertFields a,b,c` 替换 `--upsert`
 
+<h2 id='4'>Nginx</h2>
 
-## Nginx
+<h2 id='5'>Maven</h2>
