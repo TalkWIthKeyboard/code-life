@@ -18,16 +18,16 @@
 + 执行命令后会被询问一些信息
   + 给这个新的密钥输入一个名称，保留默认的名字和设置
   + 提供一个密码
-+ 完成后在 `~/.ssh` 中能查找到 `id_rsa.pub` 和 `id_rsa`，第一个是公钥，第二个是私钥。
++ 完成后在 `~/.ssh` 中能查找到 `id_rsa.pub` 和 `id_rsa`，第一个是公钥，第二个是私钥。
 + 在服务器上配置 `ssh`
   ```
   // 检查是否存在 ssh 服务
   $ rpm –qa|grep ssh
-  // 如果没有则先下载并启动
+  // 如果没有则先下载并启动
   $ yum install ssh
   $ systemctl start ssh
   ```
-+ 将客户机上的公钥 `~/.ssh/id_rsa.pub` 复制到服务器的 `~/.ssh/authorized_keys` 即可
++ 将客户机上的公钥 `~/.ssh/id_rsa.pub` 复制到服务器的 `~/.ssh/authorized_keys` 即可
 
 <h2 id='2'>YUM</h2>
 
@@ -41,7 +41,7 @@
   $ /etc/yum/yum.conf
   ```
 + `cachedir`: `yum` 缓存的目录，`yum` 在此存储下载的 `rpm` 包和数据库，默认设置为 `/var/cache/yum`
-+ `keepcache`: 安装完成后是否保留软件包，0为不保留**（默认为0）**，1为保留
++ `keepcache`: 安装完成后是否保留软件包，0为不保留 **（默认为0）** ，1为保留
 + `debuglevel`: Debug 信息输出等级，范围为0-10，缺省为2
 + `logfile`: `yum` 日志文件位置
 + `pkgpolicy`: 包的策略。一共有两个选项，`newest` 和 `last` ，这个作用是如果你设置了多个 `repository`，而同一软件在不同的 `repository` 中同时存在，`yum` 应该安装哪一个，如果是 `newest` ，则 `yum` 会安装最新的那个版本。如果是 `last` ，则 `yum` 会将服务器 `id` 以字母表排序，并选择最后的那个服务器上的软件安装。一般都是选 `newest`。
@@ -54,7 +54,7 @@
 
 ## Sources
 
-`YUM` 的源分为本地源和网络源，本地源需要关联挂载的磁盘地址，网络源需要关联外部源仓库地址。在 `/etc/yum.repos.d/` 中，有 `CentOS-Base.repo` 和 `CentOS-Epel.repo`。其中 `Base` 是网络源的配置，`Epel` 是 `Epel` 源的配置，默认没有 `CentOS-Media.repo` 本地源的配置。如果需要，可以进行手动添加，也可以在该路径下添加一些针对特殊的软件的源，类似 `docker-ce.repo`，在安装的过程中会首选这个源。
+`YUM` 的源分为本地源和网络源，本地源需要关联挂载的磁盘地址，网络源需要关联外部源仓库地址。在 `/etc/yum.repos.d/` 中，有 `CentOS-Base.repo` 和 `CentOS-Epel.repo`。其中 `Base` 是网络源的配置，`Epel` 是 `Epel` 源的配置，默认没有 `CentOS-Media.repo` 本地源的配置。如果需要，可以进行手动添加，也可以在该路径下添加一些针对特殊的软件的源，类似 `docker-ce.repo`，在安装的过程中会首选这个源。
 
 
 <h2 id='3'>MongoDB</h2>
