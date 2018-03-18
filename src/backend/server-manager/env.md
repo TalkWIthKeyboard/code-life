@@ -106,6 +106,20 @@
     "method":"chacha20-ietf-poly1305"
   }
   ```
++ 下载 `proxychains4`
+  ```
+  $ wget -c https://github.com/rofl0r/proxychains-ng/releases/download/v4.11/proxychains-ng-4.11.tar.bz2
+  ```
++ 安装 `gcc`
+  ```
+  $ yum  install  gcc
+  ```
++ 编译和安装 `proxychains4`
+  ```
+  $ tar zxf proxychains-ng-4.11.tar.bz2
+  $ cd proxychains-ng-4.11
+  $ ./configure && make && make install && make install-config
+  ```
 + 修改 `proxychains4` 配置，在末尾加上 `socks5 127.0.0.1 1080`，`1080` 是在上面设置的的 `socks5` 监听的端口
   ```
   // 配置路径
@@ -121,6 +135,11 @@
   $ proxychains4 curl ip.cn
   // 当前 IP：103.192.xx.xx 来自：香港特别行政区 xTom
   ```
++ 如果觉得每次都要输入 `proxychains4` 很麻烦，也可以设置全局代理
+  ```
+  $ proxychains4  -q /bin/bash
+  ```
+
 
 
 <h2 id='2'>YUM</h2>
