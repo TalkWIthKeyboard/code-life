@@ -39,7 +39,7 @@
   $ /etc/yum/yum.conf
   ```
 + `cachedir`: `yum` 缓存的目录，`yum` 在此存储下载的 `rpm` 包和数据库，默认设置为 `/var/cache/yum`
-+ `keepcache`: 安装完成后是否保留软件包，0为不保留**（默认为0）**，1为保留
++ `keepcache`: 安装完成后是否保留软件包，0为不保留 **（默认为0）** ，1为保留
 + `debuglevel`: Debug 信息输出等级，范围为0-10，缺省为2
 + `logfile`: `yum` 日志文件位置
 + `pkgpolicy`: 包的策略。一共有两个选项，`newest` 和 `last` ，这个作用是如果你设置了多个 `repository`，而同一软件在不同的 `repository` 中同时存在，`yum` 应该安装哪一个，如果是 `newest` ，则 `yum` 会安装最新的那个版本。如果是 `last` ，则 `yum` 会将服务器 `id` 以字母表排序，并选择最后的那个服务器上的软件安装。一般都是选 `newest`。
