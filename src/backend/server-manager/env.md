@@ -6,6 +6,7 @@
 + [MongoDB](#3)
 + [Nginx](#4)
 + [Maven](#5)
++ [Python](#6)
 
 <h2 id='1'>SSH 登录</h2>
 
@@ -264,3 +265,52 @@ WantedBy=multi-user.target
 <h2 id='4'>Nginx</h2>
 
 <h2 id='5'>Maven</h2>
+
+<h2 id='6'>Python</h2>
+
+### 升级 `Python` 版本
+
+#### 使用 `yum` 安装
++ 如果 `yum` 没有 `Epel` 的源，先安装
+  ```
+  $ yum install epel-release
+  ```
++ 安装 `Python3`
+  ```
+  $ yum install python34
+  ```
++ 这个是没有安装 `Pip` 的，如果需要可以下载安装
+  ```
+  $ curl -O https://bootstrap.pypa.io/get-pip.py
+  $ sudo /usr/bin/python3.4 get-pip.py
+  ```
+
+#### 使用压缩文件安装
++ 下载压缩包
+  ```
+  $ wget https://www.python.org/ftp/python/3.5.2/Python-3.5.2.tgz
+  ```
++ 解压缩，安装编译环境 `gcc`
+  ```
+  $ tar -zxvf Python-3.5.2.tgz
+  $ yum install make gcc gcc-c++
+  ```
++ 编译安装
+  ```
+  $ cd Python-3.5.2
+  $ ./configure && make && make install
+  ```
+#### 修改软连接
++ 查看软连接，记下 `python3` 指向的路径 
+  > 假设这个指向的路径就是 `python3`（相对路径）
+  ```
+  $ ls -al /usr/bin | grep python
+  ```
++ 重命名 `python` 软连接文件
+  ```
+  $ mv /usr/bin/python /usr/bin/python.bak
+  ```
++ 新建软连接
+  ```
+  $ ln -s /usr/bin/python3 /usr/bin/python
+  ```
