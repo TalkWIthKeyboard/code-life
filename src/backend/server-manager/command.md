@@ -1,5 +1,6 @@
 ## Linux Shell
 
+### ls && lsof 
 + 查看端口活动
 
 ```
@@ -10,28 +11,26 @@ $ lsof -i :27017
 ```
 $ lsof -l Wired*
 ```
-+ 修改文件权限
++ 查看权限和软连接
+> 前面带有 `l` 的就表示是一个软连接
 ```
-// 直接修改读写权限
-$ chmod 664 WiredTigerLAS.wt
-// 修改所属的组用户
-$ chmod mongod:mongod WiredTiger.turtle
-```
-+ 杀掉进程
+$ ls -al /usr/bin | python
 
+// output
+lrwxrwxrwx    1 root root           9 8月  29 2017 python2 -> python2.7
+-rwxr-xr-x    1 root root        7136 11月  6 2016 python2.7
 ```
-$ kill -9 processId
-```
-+ 查看软连接实际地址
 
-```
-$ which mongod
-```
-+ 查看所有由 `systemctl` 启动的服务
+### systemctl
 
-```
-$ systemctl list-units --type=service
-```
++ 查看通过 `systemctl` 启动的所有服务
+  ```
+  $ systemctl list-units --type=service
+  ```
++ 添加/删除 开机启动项
+  ```
+  $ systemctl enable/disable mongod.service
+  ```
 + `systemctl` 重载和修改命令
   > 参考资料：
   > 
@@ -52,3 +51,27 @@ $ systemctl list-units --type=service
   $ systemctl daemon-reload
   ```
   运行之后会 `reload` 所有配置文件，然后再重新启动服务即可。
+
+### Others
++ 修改文件权限
+```
+// 直接修改读写权限
+$ chmod 664 WiredTigerLAS.wt
+// 修改所属的组用户
+$ chmod mongod:mongod WiredTiger.turtle
+```
++ 杀掉进程
+
+```
+$ kill -9 processId
+```
++ 查看软连接实际地址
+
+```
+$ which mongod
+```
++ 进行软连接
+> 生成 `python` 命令的软连接，指向 `python2`
+```
+$ ln -s /usr/bin/python2 /usr/bin/python
+```
