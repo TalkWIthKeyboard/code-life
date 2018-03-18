@@ -33,7 +33,7 @@
 
 > 3.4.3
 
-## Configuration
+### Configuration
 > + [YUM 配置说明](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/6/html/deployment_guide/sec-configuring_yum_and_yum_repositories)
 > + [CentOS yum 源的配置与使用](https://www.cnblogs.com/mchina/archive/2013/01/04/2842275.html)
 + `yum.conf`
@@ -52,9 +52,32 @@
 + `obsoletes`: 这是一个 `update` 的参数，具体请参阅yum(8)，简单的说就是相当于 `upgrade` ，允许更新陈旧的RPM包。
 + `plugins`: 是否启用插件，默认1为允许，0表示不允许。
 
-## Sources
+### Sources
 
 `YUM` 的源分为本地源和网络源，本地源需要关联挂载的磁盘地址，网络源需要关联外部源仓库地址。在 `/etc/yum.repos.d/` 中，有 `CentOS-Base.repo` 和 `CentOS-Epel.repo`。其中 `Base` 是网络源的配置，`Epel` 是 `Epel` 源的配置，默认没有 `CentOS-Media.repo` 本地源的配置。如果需要，可以进行手动添加，也可以在该路径下添加一些针对特殊的软件的源，类似 `docker-ce.repo`，在安装的过程中会首选这个源。
+
+### Cli
+
++ 列出所有已安装的软件包 
+  ```
+  $yum list installed 
+  ```
++ 使用YUM查找软件包 
+  ```
+  $ yum search 
+  ```
++ 列出所有 可安装/可更新/已安装但不在 `Yum Repository` 的软件包 
+  ```
+  $ yum list/updates/extras
+  ``` 
++ 使用YUM获取 可更新/已安装/已安装但不在 `Yum Repository` 软件包信息 
+  ```
+  $ yum info updates/installed/extras
+  ```
++ 列出软件包提供哪些文件 
+  ```
+  $ yum provides
+  ```
 
 
 <h2 id='3'>MongoDB</h2>
