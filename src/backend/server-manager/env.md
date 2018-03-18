@@ -39,7 +39,7 @@
 
 + 首先验证一下自己的 `terminal` 是不是没有代理成功
   ```
-  $ ping ip.cn
+  $ curl ip.cn
   // 当前 IP：116.231.xx.xx 来自：上海市 电信
   ```
 + 安装 `proxychains4`
@@ -75,7 +75,50 @@
     ```
 + 验证一下是否成功
   ```
-  $ ping ip.cn
+  $ proxychains4 curl ip.cn
+  // 当前 IP：103.192.xx.xx 来自：香港特别行政区 xTom
+  ```
+### CentOS7
++ 安装 `libsodium` 以支持 `shandowsockets` 最新的 `chacha20-ietf-poly1305` 加密算法
+  ```
+  $ yum install libsodium
+  ```
++ 安装 `shadowsocks` 的 `Python2` 版本
+  ```
+  $ pip install https://github.com/shadowsocks/shadowsocks/archive/master.zip -U
+  ```
++ 配置 `shadowsocks`
+  ```
+  $ vim /etc/sslocal.json
+
+  {
+    // 代理服务器地址
+    "server":"host",
+    // 代理服务器端口
+    "server_port":57158,
+    // 本地 sock5 监听端口
+    "local_port":1080,
+    // 服务器密码
+    "password":"password",
+    // 超时时间
+    "timeout":600,
+    // 服务器加密方式
+    "method":"chacha20-ietf-poly1305"
+  }
+  ```
++ 修改 `proxychains4` 配置，在末尾加上 `socks5 127.0.0.1 1080`，`1080` 是在上面设置的的 `socks5` 监听的端口
+  ```
+  // 配置路径
+  $ /usr/local/etc/proxychains.conf
+  ```
++ 在后台启动 `shadowsocks`
+  > 以 `/etc/sslocal.json` 作为配置执行，`LOG` 打在 `/var/log/ss-local.log`
+  ```
+  $ nohup sslocal -c /etc/sslocal.json < /dev/null &>>/var/log/ss-local.log
+  ```
++ 测试
+  ```
+  $ proxychains4 curl ip.cn
   // 当前 IP：103.192.xx.xx 来自：香港特别行政区 xTom
   ```
 
@@ -300,7 +343,7 @@ WantedBy=multi-user.target
   $ cd Python-3.5.2
   $ ./configure && make && make install
   ```
-#### 修改软连接
+#### 修改环境
 + 查看软连接，记下 `python3` 指向的路径 
   > 假设这个指向的路径就是 `python3`（相对路径）
   ```
@@ -314,3 +357,8 @@ WantedBy=multi-user.target
   ```
   $ ln -s /usr/bin/python3 /usr/bin/python
   ```
++ 修改 `yum` 的 `python` 环境
+  ```
+  $ vim /usr/bin/yum
+  ```
+  把第一行的 `#!/usr/bin/python` 改为 `#!/usr/bin/python2.7` （这个看自己服务器的 `python2` 版本）
