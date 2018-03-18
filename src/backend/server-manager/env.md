@@ -1,6 +1,7 @@
 ## 一览
 
 + [SSH 登录](#1)
++ [Shadowsockets + proxychains4](#6)
 + [YUM](#2)
 + [MongoDB](#3)
 + [Nginx](#4)
@@ -28,6 +29,55 @@
   $ systemctl start ssh
   ```
 + 将客户机上的公钥 `~/.ssh/id_rsa.pub` 复制到服务器的 `~/.ssh/authorized_keys` 即可
+
+<h2 id='6'>Shadowsockets + proxychains4</h2>
+
+### MacOS
+> 10.11.6
+在 `Mac` 上安装了 `shadowsockets` 进行科学上网以后，发现 `terminal` 的流量还是没有通过代理IP进行请求。所以为了实现这个功能，我们再重新安装 `proxychains4` 。
+
++ 首先验证一下自己的 `terminal` 是不是没有代理成功
+  ```
+  $ ping ip.cn
+  // 当前 IP：116.231.xx.xx 来自：上海市 电信
+  ```
++ 安装 `proxychains4`
+  ```
+  $ brew install proxychains4
+  ```
++ 因为高版本的 `MacOS` 系统推出了 `System Integrity Protection` 功能，会阻碍 `proxychain` 通过修改环境变量的方式达到代理 `terminal` 的目的，所以我们先关闭 `SIP`。
+  + 先检查一下是否已经关闭
+    ```
+    $ csrutil status
+    // System Integrity Protection status: enabled.
+    ```
+  + 重启电脑，长按 `option`，进入选择页面后，按住 `Command + R`，进入系统恢复页面，左上角工具里选择 **[终端]**
+    ```
+    $ csrutil disable
+    ```
+  + 重启电脑，检查是否关闭
+    ```
+    $ csrutil status
+    // System Integrity Protection status: disabled.
+    ```
++ 查看 `shadowsockets` 客户端 `socks5` 的监听端口
+  > 以 `ShadowsocketsX-NG` 为例
+  ```
+  偏好设置 -> 高级 -> 本地socks5监听端口
+  ```
+  ![socks5](../../../res/img/socks5.png)
+
++ 修改 `proxychains4` 配置，在末尾加上 `socks5 127.0.0.1 port`，`port` 是在上面查看到的 `socks5` 监听的端口
+    ```
+    // 配置路径
+    $ /usr/local/etc/proxychains.conf
+    ```
++ 验证一下是否成功
+  ```
+  $ ping ip.cn
+  // 当前 IP：103.192.xx.xx 来自：香港特别行政区 xTom
+  ```
+
 
 <h2 id='2'>YUM</h2>
 
