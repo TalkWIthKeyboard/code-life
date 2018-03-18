@@ -6,7 +6,7 @@
 + [MongoDB](#3)
 + [Nginx](#4)
 + [Maven](#5)
-+ [Python](#6)
++ [Python](#7)
 
 <h2 id='1'>SSH 登录</h2>
 
@@ -266,7 +266,7 @@ WantedBy=multi-user.target
 
 <h2 id='5'>Maven</h2>
 
-<h2 id='6'>Python</h2>
+<h2 id='7'>Python</h2>
 
 ### 升级 `Python` 版本
 
