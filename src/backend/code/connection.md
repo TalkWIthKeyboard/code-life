@@ -78,3 +78,49 @@ class MysqlConn(object):
         except Exception:
             print traceback.format_exc()
 ```
+
+## Influxdb
+### Typescript
+> use 'Influx'
+
+```Typescript
+const config = require('config')
+import * as Influx from 'influx'
+
+const influxDB = new Influx.InfluxDB({
+  host: config.has('influx.host') ? config.get('influx.host') : 'localhost',
+  port: config.has('influx.port') ? config.get('influx.port') : '8086',
+  database: 'test',
+  schema: [
+    {
+      measurement: 'record_data',
+      fields: { default: Influx.FieldType.INTEGER },
+      tags: ['CPU', 'memory'],
+    },
+  ],
+})
+
+let pointsQueue: any[] = []
+let lastWriteTime = Date.now()
+
+async function influxSaveData(measurement, tagObject) {
+  if (config.has('influx')) {
+    pointsQueue.push({
+      measurement,
+      tags: tagObject,
+      fields: { default: 1 },
+      timestamp: Date.now() * 1e6,
+    })
+    if (pointsQueue.length >= 100 || Date.now() - lastWriteTime > 20000) {
+      try {
+        await influxDB.writePoints(pointsQueue)
+        debug('It was success to save to influxDB.')
+      } catch (err) {
+        console.error(`Error saving db to influxDB, ${err.stack}`)
+      }
+      pointsQueue = []
+      lastWriteTime = Date.now()
+    }
+  }
+}
+```

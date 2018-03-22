@@ -260,7 +260,7 @@ Documentation=https://docs.mongodb.org/manual
 [Service]
 User=mongod
 Group=mongod
-Environment="OPTIONS=-f /etc/mongod.conf -auth"
+Environment="OPTIONS=-f /etc/mongod.conf -auth --noIndexBuildRetry"
 ExecStart=/usr/bin/mongod $OPTIONS
 ExecStartPre=/usr/bin/mkdir -p /var/run/mongodb
 ExecStartPre=/usr/bin/chown mongod:mongod /var/run/mongodb

@@ -75,3 +75,50 @@ $ which mongod
 ```
 $ ln -s /usr/bin/python2 /usr/bin/python
 ```
+## Redis
+
+### CLI
++ `redis-server [conf_file_path]: ` 使用配置文件启动 `redis` 服务
++ `redis-cli -h host -p port: ` 连接 `redis` 服务
+
+### SCAN
+> `pattern`: 正则键值 `count`: 迭代的长度
++ `SCAN cursor [MATCH pattern] [COUNT count]: ` 从 `cursor` 开始进行游标查找，在生产环境下为了防止锁库可以使用该命令代替 `keys *`
++ `SSCAN key cursor [MATCH pattern] [COUNT count]: ` 用来迭代 `SET` 中的元素
++ `HSCAN key cursor [MATCH pattern] [COUNT count]: ` 用来迭代 `HASH` 中的元素
++ `ZSCAN key cursor [MATCH pattern] [COUNT count]: ` 用来迭代 `ZSET` 中的元素
+
+### KEY
++ `KEYS key(regex): ` 显示所有符合 `key` 正则表达式的 `key` 名字
++ `EXISTS key1 key2: ` 检查给定的 `key` 是否存在，存在则输出1，不存在输出0。如果是多个 `key` 则输出存在的 `key` 的个数。  
++ `EXPIRE key: ` 设置过期时间
++ `TTL key: ` 查看剩余的过期时间，精确到秒，未设置过期时间则返回 `-1`
++ `PTTL key: ` 查看剩余的过期时间，精确到毫秒，未设置过期时间则返回 `-1`
+
+### SET
++ `SMEMBER key: ` 输出给定集合的所有元素。
++ `SISMEMBER key item: ` 检查某元素是否在给定集合中
++ `SADD key item1 item2: ` 将元素加入到集合
++ `SDIFF key1 key2: ` 显示多个集合之间的差集，只有一个集合则返回本身
++ `SCARD key: ` 显示集合中元素的个数
+
+### HASH
++ `HSET key field value: ` 设置指定 `field` 的 `value` 值
++ `HGET key field: ` 获field得指定 `field` 对应的 `value ` 值
++ `HSET key field1 value1 field2 value2: ` 设置多个指定的 `field` 的 `value` 值
++ `HMGET key field1 field2: ` 获得多个 `field` 对应的 `value` 值
++ `HINCRBY key field increment: ` 为哈希表 `key` 中的 `field` 的值加上增量 `increment`，对字符串操作会报错，如果 `key` 或者 `field` 不存在会新建以后执行 `HINCRBY` 操作
+
+### LIST
+### ZSET
+
+## Influxdb
+### CLI
++ `influx --host host --port port --database db: ` 连接数据库
++ `create database "db_name": ` 创建数据库
++ `show databases: ` 显示所有数据库
++ `drop database "db_name": ` 删除数据库
++ `use db_name: ` 使用数据库
++ `show measurements: ` 显示该数据库中所有的表
++ `insert test,host=127.0.0.1,monitor_name=test count=1`: 创建表，直接在插入数据的时候指定表名
++ `drop measurement "measurement_name"`: 删除表
