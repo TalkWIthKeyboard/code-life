@@ -11,7 +11,7 @@ $ lsof -i :27017
 ```
 $ lsof -l Wired*
 ```
-+ 查看权限和软连接
++ 查看权限和软连接
 > 前面带有 `l` 的就表示是一个软连接
 ```
 $ ls -al /usr/bin | python
@@ -120,5 +120,5 @@ $ ln -s /usr/bin/python2 /usr/bin/python
 + `drop database "db_name": ` 删除数据库
 + `use db_name: ` 使用数据库
 + `show measurements: ` 显示该数据库中所有的表
-+ `insert test,host=127.0.0.1,monitor_name=test count=1`: 创建表，直接在插入数据的时候指定表名
-+ `drop measurement "measurement_name"`: 删除表
++ `insert test,host=127.0.0.1,monitor_name=test count=1: ` 创建表，直接在插入数据的时候指定表名
++ `drop measurement "measurement_name": ` 删除表
