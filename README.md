@@ -14,3 +14,5 @@
 
 ## 客户端开发
 ## 机器学习
+### NLP
++ [论文翻译](/src/machine-learning/thesis.md)
